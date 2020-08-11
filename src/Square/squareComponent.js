@@ -13,10 +13,7 @@ function Square(props) {
 
     return (
         <button className="square" onClick={props.onClick}>
-            {props.value === 'blue' ? 
-                <div style={Object.assign({ backgroundColor: "blue" }, circle)} /> :
-                props.value === 'red' ?
-                    <div style={Object.assign({ backgroundColor: "red" }, circle)} /> : null }
+            <div style={Object.assign({ backgroundColor: props.value }, circle)} />
         </button>
     )
 }

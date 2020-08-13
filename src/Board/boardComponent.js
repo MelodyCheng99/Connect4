@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import Square from '../Square/squareComponent'
 
@@ -15,30 +15,30 @@ class Board extends React.Component {
     }
 
     determineIfWon(curPosition, curPlayer, squares) {
-        if ((curPosition % 7) >= 3 && squares[curPosition - 1] == curPlayer &&
-            squares[curPosition - 2] == curPlayer && squares[curPosition - 3] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition % 7) >= 2 && (curPosition % 7) <= 5 &&
-            squares[curPosition - 1] == curPlayer && squares[curPosition - 2] == curPlayer && squares[curPosition + 1] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition % 7) >= 1 && (curPosition % 7) <= 4 &&
-            squares[curPosition - 1] == curPlayer && squares[curPosition + 1] == curPlayer && squares[curPosition + 2] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition % 7) <= 3 && squares[curPosition + 1] == curPlayer &&
-            squares[curPosition + 2] == curPlayer && squares[curPosition + 3] == curPlayer) {
-            return curPlayer
+        for (let leftMost = -3; leftMost <= 0; leftMost++) {
+            if ((curPosition % 7) >= Math.abs(leftMost) && (curPosition % 7) <= 3 + Math.abs(leftMost) &&
+                squares[curPosition + leftMost] === curPlayer && squares[curPosition + leftMost + 1] === curPlayer &&
+                squares[curPosition + leftMost + 2] === curPlayer && squares[curPosition + leftMost + 3] === curPlayer) {
+                    return curPlayer
+            } else if ((curPosition % 7) >= Math.abs(leftMost) && (curPosition % 7) <= 3 + Math.abs(leftMost) &&
+                (curPosition + (7 * leftMost) + leftMost) >= 0 && (curPosition + (7 * (leftMost + 3)) + leftMost + 3) <= 41 &&
+                squares[curPosition + (7 * leftMost) + leftMost] === curPlayer && 
+                squares[curPosition + (7 * (leftMost + 1)) + leftMost + 1] === curPlayer &&
+                squares[curPosition + (7 * (leftMost + 2)) + leftMost + 2] === curPlayer && 
+                squares[curPosition + (7 * (leftMost + 3)) + leftMost + 3] === curPlayer) {
+                    return curPlayer
+            } else if ((curPosition % 7) >= Math.abs(leftMost) && (curPosition % 7) <= 3 + Math.abs(leftMost) &&
+                (curPosition - (7 * leftMost) + leftMost) >= 0 && (curPosition - (7 * (leftMost + 3)) + (leftMost + 3)) <= 41 &&
+                squares[curPosition - (7 * leftMost) + leftMost] === curPlayer &&
+                squares[curPosition - (7 * (leftMost + 1)) + (leftMost + 1)] === curPlayer &&
+                squares[curPosition - (7 * (leftMost + 2)) + (leftMost + 2)] === curPlayer &&
+                squares[curPosition - (7 * (leftMost + 3)) + (leftMost + 3)] === curPlayer) {
+                    return curPlayer
+            }   
+        }
 
-        } else if ((curPosition + 21) <= 41 && squares[curPosition + 7] == curPlayer &&
-            squares[curPosition + 14] == curPlayer && squares[curPosition + 21] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition + 14) <= 41 && (curPosition - 7) >= 0 &&
-            squares[curPosition + 7] == curPlayer && squares[curPosition + 14] == curPlayer && squares[curPosition - 7] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition + 7) <= 41 && (curPosition - 14) >= 0 &&
-            squares[curPosition + 7] == curPlayer && squares[curPosition - 7] == curPlayer && squares[curPosition - 14] == curPlayer) {
-            return curPlayer
-        } else if ((curPosition - 21) >= 0 && squares[curPosition - 7] == curPlayer &&
-            squares[curPosition - 14] == curPlayer && squares[curPosition - 21] == curPlayer) {
+        if ((curPosition + 21) <= 41 && squares[curPosition + 7] === curPlayer &&
+            squares[curPosition + 14] === curPlayer && squares[curPosition + 21] === curPlayer) {
             return curPlayer
         }
 
@@ -49,7 +49,7 @@ class Board extends React.Component {
         const squares = this.state.squares.slice()
         let winner = this.state.winner
 
-        for (let j = 5; j > 0; j--) {
+        for (let j = 5; j >= 0; j--) {
             const curPosition = (7 * j) + (i % 7)
             if (squares[curPosition] == null) {
                 const curPlayer = this.state.blueIsNext ? 'blue' : 'red'
@@ -70,7 +70,7 @@ class Board extends React.Component {
         return (
             <Square
                 value={this.state.squares[i]}
-                onClick={() => this.selectSquare(i)} />
+                onClick={() => this.state.winner == null ? this.selectSquare(i) : null} />
         )
     }
 

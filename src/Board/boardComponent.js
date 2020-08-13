@@ -90,8 +90,11 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div>
-                { this.state.winner ? <span> You Win! </span> : null }
+            <div className="gameScreen">
+                { this.state.winner != null ? 
+                    <span className="youWinText"> You Win! </span> 
+                    : null 
+                }
 
                 <div className="board">
                     {this.renderRow(0)}

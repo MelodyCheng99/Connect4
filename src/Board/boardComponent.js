@@ -15,7 +15,13 @@ class Board extends React.Component {
 
     selectSquare(i) {
         const squares = this.state.squares.slice()
-        squares[i] = this.state.blueIsNext ? 'blue' : 'red'
+        for (let j = 5; j > 0; j--) {
+            const curPosition = (7 * j) + (i % 7)
+            if (squares[curPosition] == null) {
+                squares[curPosition] = this.state.blueIsNext ? 'blue' : 'red'
+                break
+            }
+        }
         this.setState({
             squares: squares,
             blueIsNext: !this.state.blueIsNext

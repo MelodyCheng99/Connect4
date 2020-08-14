@@ -1,4 +1,5 @@
 import React from 'react'
+import Confetti from 'react-confetti'
 
 import Square from '../Square/squareComponent'
 
@@ -11,7 +12,27 @@ class Board extends React.Component {
             squares: Array(42).fill(null),
             blueIsNext: true,
             winner: null,
+            width: 0,
+            height: 0,
         }
+
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions)
+    }
+
+    updateWindowDimensions() {
+        this.setState({
+            width: window.innerWidth,
+            height: window.innerHeight
+        })
     }
 
     determineIfWon(curPosition, curPlayer, squares) {
@@ -91,6 +112,13 @@ class Board extends React.Component {
     render() {
         return (
             <div className="gameScreen">
+                { this.state.winner != null ?
+                    <Confetti 
+                        width={this.state.width} 
+                        height={this.state.height} />
+                    : null
+                }
+
                 <span className="textClass"> 
                     { this.state.winner != null ? 
                         (this.state.winner === 'blue' ? 'Blue Player Wins!' : 'Red Player Wins!') :

@@ -109,6 +109,14 @@ class Board extends React.Component {
         )
     }
 
+    restartGame() {
+        this.setState({
+            squares: Array(42).fill(null),
+            blueIsNext: true,
+            winner: null
+        })
+    }
+
     render() {
         return (
             <div className="gameScreen">
@@ -133,6 +141,15 @@ class Board extends React.Component {
                     {this.renderRow(3)}
                     {this.renderRow(4)}
                     {this.renderRow(5)}
+                </div>
+
+                <div className="buttonContainer">
+                    <button 
+                        class="button" 
+                        onClick={() => this.restartGame()}
+                    >
+                        Restart Game
+                    </button>
                 </div>
             </div>
         )

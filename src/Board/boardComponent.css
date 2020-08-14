@@ -17,3 +17,24 @@
 .textClass {
     font-size: 24px;
 }
+
+.buttonContainer {
+    margin-top: 5%;
+}
+
+.button {
+    background-color: #0288d1;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 16px;
+}
+
+.button:focus {
+    background-color: #0277bd;
+    border-radius: 20px;
+    outline: none;
+}
